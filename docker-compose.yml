@@ -5,7 +5,7 @@ services:
     image: niiknow/vestacp
     container_name: vesta
     cap_add: ['NET_RAW', 'NET_ADMIN']
-    hostname: yourcpanelhostname.com
+    hostname: vps.zhr.org.ua
     volumes:
       - "/opt/vestacp/backup:/backup"
       - "/opt/vestacp/vesta:/vesta"
@@ -14,7 +14,7 @@ services:
       - "3322:22"
       - "80:80"
       - "443:443"
-      - "9088:8083"
+      - "9098:8083"
     ulimits:
       nproc: 65535
       nofile:
