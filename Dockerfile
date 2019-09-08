@@ -63,6 +63,11 @@ RUN cd /tmp \
     && cd ${NGINX_BUILD_DIR}/nginx-${NGINX_VERSION}; dpkg-buildpackage -uc -us -b \
     && cd ${NGINX_BUILD_DIR} \
     && dpkg -i nginx_${NGINX_VERSION}-1~xenial_amd64.deb \
+	&& apt-get install -yq php5.6-mbstring php5.6-cgi php5.6-cli php5.6-dev php5.6-geoip php5.6-common php5.6-xmlrpc php5.6-sybase php5.6-curl \
+        php5.6-enchant php5.6-imap php5.6-xsl php5.6-mysql php5.6-mysqli php5.6-mysqlnd php5.6-pspell php5.6-gd php5.6-zip \
+        php5.6-tidy php5.6-opcache php5.6-json php5.6-bz2 php5.6-pgsql php5.6-mcrypt php5.6-readline php5.6-imagick \
+        php5.6-intl php5.6-sqlite3 php5.6-ldap php5.6-xml php5.6-redis php5.6-fpm \
+        php5.6-soap php5.6-bcmath php5.6-fileinfo php5.6-xdebug php5.6-exif php5.6-tokenizer php5.6-phar \
     && apt-get install -yq php7.1-mbstring php7.1-cgi php7.1-cli php7.1-dev php7.1-geoip php7.1-common php7.1-xmlrpc php7.1-sybase php7.1-curl \
         php7.1-enchant php7.1-imap php7.1-xsl php7.1-mysql php7.1-mysqli php7.1-mysqlnd php7.1-pspell php7.1-gd php7.1-zip \
         php7.1-tidy php7.1-opcache php7.1-json php7.1-bz2 php7.1-pgsql php7.1-mcrypt php7.1-readline php7.1-imagick \
@@ -107,14 +112,14 @@ RUN cd /tmp \
         --spamassassin yes --clamav yes \
         --iptables yes --fail2ban yes \
         --mysql yes --postgresql yes --remi yes \
-        --quota no --password MakeItSo18 \
+        --quota no --password IseekyouVesta19 \
         -y no -f \
 
 # begin apache stuff
     && service apache2 stop && service vesta stop \
 
 # install additional mods since 7.2 became default in the php repo
-    && apt-get install -yf --no-install-recommends libapache2-mod-php7.1 libapache2-mod-php7.2 libapache2-mod-php7.3 \
+    && apt-get install -yf --no-install-recommends libapache2-mod-php5.6 libapache2-mod-php7.1 libapache2-mod-php7.2 libapache2-mod-php7.3 \
         postgresql-9.6-postgis-2.5 postgresql-9.6-pgrouting postgis postgis-gui postgresql-9.6-pgaudit \
         postgresql-9.6-postgis-2.5-scripts postgresql-9.6-repack \
 
@@ -262,35 +267,50 @@ RUN cd /tmp \
     && sed -i -e "s/^#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.6/main/postgresql.conf \
 
 # php stuff - after vesta because of vesta-php installs
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.1/apache2/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.1/cli/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.1/cgi/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.1/fpm/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/5.6/apache2/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/5.6/cli/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/5.6/cgi/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/5.6/fpm/php.ini \
 
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.2/apache2/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.2/cli/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.2/cgi/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.2/fpm/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.1/apache2/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.1/cli/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.1/cgi/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.1/fpm/php.ini \
 
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.3/apache2/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.3/cli/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.3/cgi/php.ini \
-    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 600M/" /etc/php/7.3/fpm/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.2/apache2/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.2/cli/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.2/cgi/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.2/fpm/php.ini \
 
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.1/apache2/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.1/cli/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.1/cgi/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.1/fpm/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.3/apache2/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.3/cli/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.3/cgi/php.ini \
+    && sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 60M/" /etc/php/7.3/fpm/php.ini \
 
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.2/apache2/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.2/cli/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.2/cgi/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.2/fpm/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/5.6/apache2/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/5.6/cli/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/5.6/cgi/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/5.6/fpm/php.ini \
 
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.3/apache2/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.3/cli/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.3/cgi/php.ini \
-    && sed -i "s/post_max_size = 8M/post_max_size = 600M/" /etc/php/7.3/fpm/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.1/apache2/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.1/cli/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.1/cgi/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.1/fpm/php.ini \
+
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.2/apache2/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.2/cli/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.2/cgi/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.2/fpm/php.ini \
+
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.3/apache2/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.3/cli/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.3/cgi/php.ini \
+    && sed -i "s/post_max_size = 8M/post_max_size = 60M/" /etc/php/7.3/fpm/php.ini \
+
+    && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/5.6/apache2/php.ini \
+    && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/5.6/cli/php.ini \
+    && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/5.6/cgi/php.ini \
+    && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/5.6/fpm/php.ini \
 
     && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/7.1/apache2/php.ini \
     && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/7.1/cli/php.ini \
@@ -307,6 +327,11 @@ RUN cd /tmp \
     && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/7.3/cgi/php.ini \
     && sed -i "s/max_input_time = 60/max_input_time = 3600/" /etc/php/7.3/fpm/php.ini \
 
+    && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/5.6/apache2/php.ini \
+    && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/5.6/cli/php.ini \
+    && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/5.6/cgi/php.ini \
+    && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/5.6/fpm/php.ini \
+
     && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/7.1/apache2/php.ini \
     && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/7.1/cli/php.ini \
     && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/7.1/cgi/php.ini \
@@ -321,6 +346,11 @@ RUN cd /tmp \
     && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/7.3/cli/php.ini \
     && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/7.3/cgi/php.ini \
     && sed -i "s/max_execution_time = 30/max_execution_time = 300/" /etc/php/7.3/fpm/php.ini \
+
+    && sed -i -e "s/;sendmail_path =/sendmail_path = \/usr\/sbin\/exim \-t/g" /etc/php/5.6/apache2/php.ini \
+    && sed -i -e "s/;sendmail_path =/sendmail_path = \/usr\/sbin\/exim \-t/g" /etc/php/5.6/cli/php.ini \
+    && sed -i -e "s/;sendmail_path =/sendmail_path = \/usr\/sbin\/exim \-t/g" /etc/php/5.6/cgi/php.ini \
+    && sed -i -e "s/;sendmail_path =/sendmail_path = \/usr\/sbin\/exim \-t/g" /etc/php/5.6/fpm/php.ini \
 
     && sed -i -e "s/;sendmail_path =/sendmail_path = \/usr\/sbin\/exim \-t/g" /etc/php/7.1/apache2/php.ini \
     && sed -i -e "s/;sendmail_path =/sendmail_path = \/usr\/sbin\/exim \-t/g" /etc/php/7.1/cli/php.ini \

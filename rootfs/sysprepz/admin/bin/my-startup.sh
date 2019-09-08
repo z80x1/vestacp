@@ -13,13 +13,19 @@ rm -f /var/run/vesta*.sock
 rm -f /var/run/vesta*.pid
 rm -f /var/run/nginx.pid
 
-# delete defult postgres admindb if not use, then comment out the line below
+# delete default postgres admindb if not use, then comment out the line below
 ./postgresql start
 ./vesta start
 
+#./php5.6-fpm start
 ./php7.2-fpm start
-./php7.3-fpm start
+#./php7.3-fpm start
 ./nginx start
 
 # ./fail2ban start \ # -- only if you run with: --cap-add=NET_ADMIN --cap-add=NET_RAW
 # other services (exim4, dovecot, clamav-daemon, spamassassin, couchdb, mongodb)
+
+# ./exim4 start
+# ./dovecot start
+# ./clamav-daemon start
+# ./spamassassin start
