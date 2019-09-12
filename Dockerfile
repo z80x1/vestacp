@@ -98,11 +98,12 @@ RUN cd /tmp \
     && bash /tmp/vst-install-ubuntu.sh \
         --nginx yes --apache yes --phpfpm no \
         --vsftpd no --proftpd no \
-        --named yes --exim yes --dovecot yes \
-        --spamassassin yes --clamav yes \
-        --iptables yes --fail2ban yes \
+        --named no --exim no --dovecot no \
+        --spamassassin no --clamav no \
+        --iptables no --fail2ban no \
         --mysql yes --postgresql yes --remi yes \
         --quota no --password IseekyouVesta19 \
+        --softaculous no \
         -y no -f \
 
 # begin apache stuff
