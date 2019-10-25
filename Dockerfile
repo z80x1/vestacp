@@ -409,6 +409,9 @@ RUN cd /tmp \
     && service nginx stop && systemctl disable nginx \
     && service apache2 stop && systemctl disable apache2 \
     && sed -i -e "s/\/var\/lib\/mysql/\/vesta\/var\/lib\/mysql/g" /etc/mysql/my.cnf \
+#TODO remove ONLY_FULL_GROUP_BY from sql_mode 
+#resulted sql_mode:
+#sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
 
 # for letsencrypt
     && touch /usr/local/vesta/data/queue/letsencrypt.pipe \
